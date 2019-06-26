@@ -31,7 +31,7 @@ import { NotificationSpec } from 'tinymce/core/api/NotificationManager';
 /// not to be confused with editor mode
 const READING = Fun.constant('toReading'); /// 'hide the keyboard'
 const EDITING = Fun.constant('toEditing'); /// 'show the keyboard'
-
+let realm;
 const renderMobileTheme = function (editor: Editor) {
   const renderUI = function () {
     const targetNode = editor.getElement();
@@ -48,7 +48,7 @@ const renderMobileTheme = function (editor: Editor) {
       editor.fire('ScrollIntoView');
     };
 
-    const realm = PlatformDetection.detect().os.isAndroid() ? AndroidRealm(doScrollIntoView) : IosRealm(doScrollIntoView);
+    realm = PlatformDetection.detect().os.isAndroid() ? AndroidRealm(doScrollIntoView) : IosRealm(doScrollIntoView);
     const original = Element.fromDom(targetNode);
     Attachment.attachSystemAfter(original, realm.system());
 
@@ -197,8 +197,7 @@ const renderMobileTheme = function (editor: Editor) {
         scrollable: false,
         items: [
           Buttons.forToolbar('back', function (/* btn */) {
-            editor.selection.collapse();
-            realm.exit();
+            editor.fire('backButtonTapped', null);
           }, { }, editor)
         ]
       };
@@ -253,6 +252,10 @@ const renderMobileTheme = function (editor: Editor) {
     editor.on('detach', () => {
       Attachment.detachSystem(realm.system());
       realm.system().destroy();
+    });
+
+    editor.on('startEdition', () => {
+      realm.startEdition();
     });
 
     return {

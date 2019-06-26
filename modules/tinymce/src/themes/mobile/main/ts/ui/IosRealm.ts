@@ -28,6 +28,7 @@ export interface MobileRealm {
   updateMode(readOnly: boolean): void;
   socket(): AlloyComponent;
   dropup(): Dropup.DropUp;
+  startEdition(): void;
 }
 
 export default function (scrollIntoView: () => void) {
@@ -71,10 +72,14 @@ export default function (scrollIntoView: () => void) {
     toolbar.restoreToolbar();
   };
 
+  let iosWebApp;
   const init = function (spec) {
-    webapp.set(
-      IosWebapp.produce(spec)
-    );
+    iosWebApp = IosWebapp.produce(spec);
+    webapp.set(iosWebApp);
+  };
+
+  const startEdition = function () {
+    iosWebApp.startEdition();
   };
 
   const exit = function () {
@@ -99,6 +104,7 @@ export default function (scrollIntoView: () => void) {
     restoreToolbar,
     updateMode,
     socket: Fun.constant(socket),
-    dropup: Fun.constant(dropup)
+    dropup: Fun.constant(dropup),
+    startEdition
   } as MobileRealm;
 }
