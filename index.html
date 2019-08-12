@@ -13,6 +13,8 @@
             var numberedListTest = `<ol style="list-style-type: lower-alpha;"><li><span style="font-family: Arial; font-size: 11pt;">item 1 (lower alpha)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 2&nbsp;(lower alpha)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 3&nbsp;(lower alpha)</span></li></ol><ol style="list-style-type: lower-greek;"><li><span style="font-family: Arial; font-size: 11pt;">item 1 (lower greek)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 2&nbsp;(lower greek)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 3&nbsp;(lower greek)</span></li></ol><ol style="list-style-type: lower-roman;"><li><span style="font-family: Arial; font-size: 11pt;">item 1 (lower roman)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 2&nbsp;(lower roman)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 3&nbsp;(lower roman)</span></li></ol><div>&nbsp;</div><div>&nbsp;</div>`;
             var templatesVariablesTest = `<div><code>[sender]</code>&nbsp;- the sender's name&nbsp;<br /><code>[companyname]</code>&nbsp;- your company name&nbsp;<br /><code>[customername]</code>&nbsp;- the customer name&nbsp;<br /><code>[contactname]</code>&nbsp;- the contact name&nbsp;<br /><code>[sitename]</code>&nbsp;- the site name&nbsp;<br /><code>[reference]</code>&nbsp;- the reference&nbsp;<br /><code>[date]</code>&nbsp;- the invoice date&nbsp;<br /><code>[month]</code>&nbsp;- the invoice month&nbsp;<br /><code>[year]</code>&nbsp;- the invoice year&nbsp;<br /><code>[duedate]</code>&nbsp;- the invoice due date&nbsp;<br /><code>[expirydate]</code>&nbsp;- the quote expiry date&nbsp;<br /><code>[number]</code>&nbsp;- the document number&nbsp;<br /><code>[total]</code>&nbsp;- the document total&nbsp;<br /><code>[jobaddress]</code>&nbsp;- the job address&nbsp;</div><div>&nbsp;</div><div>Computer Support for&nbsp;<code>[month]</code>&nbsp;<code>[year]</code>&nbsp;= Computer Support for September 2016&nbsp;<br />Quarterly Service&nbsp;<code>[month-2]</code>&nbsp;-&nbsp;<code>[month]</code>&nbsp;= Quarterly Service July - September&nbsp;<br />Invoice&nbsp;<code>[number]</code>&nbsp;due&nbsp;<code>[duedate]</code>&nbsp;= Invoice IV1144 due 20 October 2016</div><div>&nbsp;</div>`;
 
+            var toolbar = [ 'undo', 'bold', 'italic' ];
+
 
             tinymce.init({
                 selector: '#mytextarea',
@@ -23,7 +25,7 @@
                 toolbar:false,
                 mobile: {
                     theme:'mobile',
-                    toolbar: [ 'undo', 'bold', 'italic' ]
+                    toolbar: toolbar
                 },
                 content_style: "li {list-style-position:inside;}",
                 forced_root_block: 'div',
@@ -32,6 +34,27 @@
                 },
                 formats: {
                     underline: { inline: 'u'}
+                },
+                init_instance_callback: function (editor) {
+                    editor.on('change', function (e) {
+                        textChanged();
+                    });
+                    editor.on('keyup', function (e) {
+                        textChanged();
+                    });
+                    editor.on('cut', function (e) {
+                        textChanged();
+                    });
+                    editor.on('paste', function (e) {
+                        textChanged();
+                    });
+                    editor.on('undo', function (e) {
+                        textChanged();
+                    });
+                    editor.on('nodeChange', function (e) {
+                        onToolbarStateChanged();
+                    });
+                    
                 }
             }).then(function(selectors){
                 tinymce.activeEditor.fire('startEdition',null);
@@ -39,6 +62,59 @@
                     console.log('going back event works!!');
                 });
             });
+
+            function onToolbarStateChanged()
+            {
+                var commandsState = new Array();
+                toolbar.forEach(toolbarItem => {
+                    var result = isCommandOn(toolbarItem);
+                    if(result!==undefined)
+                    {
+                        commandsState.push({name:toolbarItem,state:result});
+                    }
+                });
+                console.log(commandsState);
+                return commandsState;
+            }
+
+            function textChanged()
+            {
+                console.log('yeah, text changed');
+                onToolbarStateChanged();
+            }
+
+            function undo()
+            {
+                fireCommand('undo');
+            }
+
+            function setBold()
+            {
+                fireCommand('bold');
+            }
+            function isBoldOn()
+            {
+                return isCommandOn('bold');
+            }
+
+            function setItalic()
+            {
+                fireCommand('italic');
+            }
+            function isItalicOn()
+            {
+                return isCommandOn('italic');
+            }
+
+            function fireCommand(commandName)
+            {
+                tinyMCE.activeEditor.execCommand(commandName);
+            }
+
+            function isCommandOn(commandName)
+            {
+                return tinyMCE.activeEditor.queryCommandState(commandName);
+            }
 
             function serializeEditor()
             {
