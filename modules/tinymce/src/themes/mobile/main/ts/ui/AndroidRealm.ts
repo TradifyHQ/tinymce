@@ -56,10 +56,10 @@ export default (scrollIntoView: () => void): MobileRealm => {
     toolbar.restoreToolbar();
   };
 
+  let androidWebApp;
   const init = (spec) => {
-    webapp.set(
-      AndroidWebapp.produce(spec)
-    );
+    androidWebApp = AndroidWebapp.produce(spec);
+    webapp.set(androidWebApp);
   };
 
   const exit = () => {
@@ -67,6 +67,10 @@ export default (scrollIntoView: () => void): MobileRealm => {
       w.exit();
       Replacing.remove(socket, switchToEdit);
     });
+  };
+
+  const startEdition = () => {
+    androidWebApp.startEdition();
   };
 
   const updateMode = (readOnly) => {
@@ -84,6 +88,7 @@ export default (scrollIntoView: () => void): MobileRealm => {
     restoreToolbar,
     updateMode,
     socket,
-    dropup
+    dropup,
+    startEdition
   };
 };

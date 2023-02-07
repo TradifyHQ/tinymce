@@ -30,6 +30,7 @@ export interface MobileRealm {
   readonly updateMode: (readOnly: boolean) => void;
   readonly socket: AlloyComponent;
   readonly dropup: Dropup.DropUp;
+  startEdition(): void;
 }
 
 export default (scrollIntoView: () => void): MobileRealm => {
@@ -73,10 +74,14 @@ export default (scrollIntoView: () => void): MobileRealm => {
     toolbar.restoreToolbar();
   };
 
+  let iosWebApp;
   const init = (spec) => {
-    webapp.set(
-      IosWebapp.produce(spec)
-    );
+    iosWebApp = IosWebapp.produce(spec);
+    webapp.set(iosWebApp);
+  };
+
+  const startEdition = () => {
+    iosWebApp.startEdition();
   };
 
   const exit = () => {
@@ -101,6 +106,7 @@ export default (scrollIntoView: () => void): MobileRealm => {
     restoreToolbar,
     updateMode,
     socket,
-    dropup
+    dropup,
+    startEdition
   };
 };
