@@ -47,7 +47,8 @@ const setup = (info, onSuccess, onFailure) => {
     setToolbarGroups: Fun.die('not implemented'),
     updateMode: Fun.die('not implemented'),
     system: alloy,
-    socket
+    socket,
+    startEdition: null
   };
 
   ThemeManager.add(strName, (editor) => {

@@ -88,7 +88,7 @@ export default (scrollIntoView: () => void): MobileRealm => {
     restoreToolbar,
     updateMode,
     socket,
-    dropup, 
+    dropup,
     startEdition
   };
 };

@@ -80,7 +80,7 @@ export default (scrollIntoView: () => void): MobileRealm => {
     webapp.set(iosWebApp);
   };
 
-  const startEdition = function () {
+  const startEdition = () => {
     iosWebApp.startEdition();
   };
 
