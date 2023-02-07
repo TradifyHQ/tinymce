@@ -20,8 +20,10 @@ export interface MobileWebApp {
   enter(): void;
   exit(): void;
   destroy(): void;
+  startEdition(): void;
 }
 
+let onView;
 const produce = (raw: {any}): MobileWebApp => {
   const mobile = StructureSchema.asRawOrDie(
     'Getting IosWebapp schema',
@@ -33,7 +35,7 @@ const produce = (raw: {any}): MobileWebApp => {
   Css.set(mobile.toolstrip, 'width', '100%');
   Css.set(mobile.container, 'position', 'relative');
 
-  const onView = () => {
+  onView = () => {
     mobile.setReadOnly(mobile.readOnlyOnInit());
     mode.enter();
   };
@@ -59,7 +61,8 @@ const produce = (raw: {any}): MobileWebApp => {
     refreshStructure: mode.refreshStructure,
     enter: mode.enter,
     exit: mode.exit,
-    destroy: Fun.noop  // TODO: lifecycle hookup
+    destroy: Fun.noop,  // TODO: lifecycle hookup
+    startEdition: onView
   };
 };
 

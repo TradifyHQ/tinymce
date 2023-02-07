@@ -57,7 +57,8 @@ const produce = (raw: {any}): MobileWebApp => {
     refreshStructure: Fun.noop,
     enter: mode.enter,
     exit: mode.exit,
-    destroy: Fun.noop
+    destroy: Fun.noop,
+    startEdition: onTap
   };
 };
 

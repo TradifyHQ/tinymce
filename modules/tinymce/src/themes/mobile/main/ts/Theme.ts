@@ -32,6 +32,8 @@ import * as SkinLoaded from './util/SkinLoaded';
 const READING = 'toReading'; // 'hide the keyboard'
 const EDITING = 'toEditing'; // 'show the keyboard'
 
+let realm;
+
 const renderMobileTheme = (editor: Editor) => {
   const renderUI = () => {
     const targetNode = editor.getElement();
@@ -50,7 +52,7 @@ const renderMobileTheme = (editor: Editor) => {
       editor.fire('ScrollIntoView');
     };
 
-    const realm = PlatformDetection.detect().os.isAndroid() ? AndroidRealm(doScrollIntoView) : IosRealm(doScrollIntoView);
+    realm = PlatformDetection.detect().os.isAndroid() ? AndroidRealm(doScrollIntoView) : IosRealm(doScrollIntoView);
     const original = SugarElement.fromDom(targetNode);
     Attachment.attachSystemAfter(original, realm.system);
 
@@ -197,8 +199,7 @@ const renderMobileTheme = (editor: Editor) => {
         scrollable: false,
         items: [
           Buttons.forToolbar('back', (/* btn */) => {
-            editor.selection.collapse();
-            realm.exit();
+            editor.fire('backButtonTapped', null);
           }, { }, editor)
         ]
       };
@@ -253,6 +254,10 @@ const renderMobileTheme = (editor: Editor) => {
     editor.on('detach', () => {
       Attachment.detachSystem(realm.system);
       realm.system.destroy();
+    });
+
+    editor.on('startEdition', () => {
+      realm.startEdition();
     });
 
     return {

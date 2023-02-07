@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <script src='./js/tinymce/tinymce.js'></script>
+        <script>
+            var boldTextTest ='<div><strong><span style="font-family: Arial; font-size: 11pt;">This is a test with bold text</span></strong></div><div>&nbsp;</div>';
+            var differentFontsTest =`<div><span style="font-family: 'andale mono', monospace; font-size: 11pt;">andale mono!</span></div><div><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Arial!</span></div><div><span style="font-family: 'arial black', sans-serif; font-size: 11pt;">Arial black!</span></div><div><span style="font-family: 'book antiqua', palatino, serif; font-size: 11pt;">Book antiqua</span></div><div><span style="font-family: 'comic sans ms', sans-serif; font-size: 11pt;">Comic Sans</span></div><div><span style="font-family: 'courier new', courier, monospace; font-size: 11pt;">Courier new</span></div><div><span style="font-family: georgia, palatino, serif; font-size: 11pt;">Georgia</span></div><div><span style="font-family: helvetica, arial, sans-serif; font-size: 11pt;">Helvetica</span></div><div><span style="font-family: impact, sans-serif; font-size: 11pt;">Impact</span></div><div><span style="font-family: symbol; font-size: 11pt;">Symbol</span></div><div><span style="font-family: tahoma, arial, helvetica, sans-serif; font-size: 11pt;">Tahoma</span></div><div><span style="font-family: terminal, monaco, monospace; font-size: 11pt;">Terminal</span></div><div><span style="font-family: 'times new roman', times, serif; font-size: 11pt;">Times New Roman</span></div><div><span style="font-family: 'trebuchet ms', geneva, sans-serif; font-size: 11pt;">Trebuchet MS</span></div><div><span style="font-family: verdana, geneva, sans-serif; font-size: 11pt;">Verdana</span></div><div><span style="font-family: webdings; font-size: 11pt;">Webings</span></div><div><span style="font-family: wingdings, 'zapf dingbats'; font-size: 11pt;">wingdings</span></div><div><div><span style="font-family: 'andale mono', monospace; font-size: 18pt;">andale mono!(18)</span></div><div><span style="font-family: arial, helvetica, sans-serif; font-size: 18pt;">Arial! (18)</span></div><div><span style="font-family: 'arial black', sans-serif; font-size: 18pt;">Arial black! (18)</span></div><div><span style="font-family: 'book antiqua', palatino, serif; font-size: 18pt;">Book antiqua (18)</span></div><div><span style="font-family: 'comic sans ms', sans-serif; font-size: 18pt;">Comic Sans (18)</span></div><div><span style="font-family: 'courier new', courier, monospace; font-size: 18pt;">Courier new (18)</span></div><div><span style="font-family: georgia, palatino, serif; font-size: 18pt;">Georgia (18)</span></div><div><span style="font-family: helvetica, arial, sans-serif; font-size: 18pt;">Helvetica (18)</span></div><div><span style="font-family: impact, sans-serif; font-size: 18pt;">Impact (18)</span></div><div><span style="font-family: symbol; font-size: 18pt;">Symbol (18)</span></div><div><span style="font-family: tahoma, arial, helvetica, sans-serif; font-size: 18pt;">Tahoma (18)</span></div><div><span style="font-family: terminal, monaco, monospace; font-size: 18pt;">Terminal (18)</span></div><div><span style="font-family: 'times new roman', times, serif; font-size: 18pt;">Times New Roman (18)</span></div><div><span style="font-family: 'trebuchet ms', geneva, sans-serif; font-size: 18pt;">Trebuchet MS (18)</span></div><div><span style="font-family: verdana, geneva, sans-serif; font-size: 18pt;">Verdana (18)</span></div><div><span style="font-family: webdings; font-size: 18pt;">Webings (18)</span></div><div><span style="font-family: wingdings, 'zapf dingbats'; font-size: 18pt;">wingdings (18)</span></div></div><div>&nbsp;</div>`;
+            var italicTextTest=`<div><em><span style="font-family: Arial; font-size: 11pt;">This is a test with italic text</span></em></div><div>&nbsp;</div>`;
+            var underlineTextTest =`<div><u><span style="font-family: Arial; font-size: 11pt;">This is the underlined text test</span></u></div><div><u><span style="font-family: Arial; font-size: 11pt;">lalalalal</span></u></div><div>&nbsp;</div>`;
+            var textColorsTest = `<div><span style="color: #ff0000;">This is red</span></div><div><span style="color: #99cc00;">This is lime green</span></div><div><span style="color: #000000;">This is black</span></div><div><span style="color: #0000ff;">This is blue</span></div><div>&nbsp;</div><div><span style="color: #000000; background-color: #ff0000;">This is red background</span></div><div><span style="color: #000000; background-color: #99cc00;">This is lime green background</span></div><div><span style="color: #000000; background-color: #000000;">This is black background</span></div><div><span style="color: #000000; background-color: #0000ff;">This is blue background</span></div>`;
+            var textAlignmentTest = `<div style="text-align: left;">This text is</div><div style="text-align: left;">justified to the left</div><div style="text-align: center;">This text is</div><div style="text-align: center;">justified to the center</div><div style="text-align: right;">This text is</div><div style="text-align: right;">justified to the right</div>`;
+            var bulletListTest = `<ul><li>item 1 (bullet)</li><li>item 2&nbsp;(bullet)</li><li>item 3&nbsp;(bullet)</li></ul><ul style="list-style-type: circle;"><li>item 1 (circle)</li><li>item 2&nbsp;(circle)</li><li>item 3&nbsp;(circle)</li></ul><ul style="list-style-type: square;"><li>item 1 (square)</li><li>item 2&nbsp;(square)</li><li>item 3&nbsp;(square)</li></ul>`;
+            var numberedListTest = `<ol style="list-style-type: lower-alpha;"><li><span style="font-family: Arial; font-size: 11pt;">item 1 (lower alpha)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 2&nbsp;(lower alpha)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 3&nbsp;(lower alpha)</span></li></ol><ol style="list-style-type: lower-greek;"><li><span style="font-family: Arial; font-size: 11pt;">item 1 (lower greek)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 2&nbsp;(lower greek)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 3&nbsp;(lower greek)</span></li></ol><ol style="list-style-type: lower-roman;"><li><span style="font-family: Arial; font-size: 11pt;">item 1 (lower roman)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 2&nbsp;(lower roman)</span></li><li><span style="font-family: Arial; font-size: 11pt;">item 3&nbsp;(lower roman)</span></li></ol><div>&nbsp;</div><div>&nbsp;</div>`;
+            var templatesVariablesTest = `<div><code>[sender]</code>&nbsp;- the sender's name&nbsp;<br /><code>[companyname]</code>&nbsp;- your company name&nbsp;<br /><code>[customername]</code>&nbsp;- the customer name&nbsp;<br /><code>[contactname]</code>&nbsp;- the contact name&nbsp;<br /><code>[sitename]</code>&nbsp;- the site name&nbsp;<br /><code>[reference]</code>&nbsp;- the reference&nbsp;<br /><code>[date]</code>&nbsp;- the invoice date&nbsp;<br /><code>[month]</code>&nbsp;- the invoice month&nbsp;<br /><code>[year]</code>&nbsp;- the invoice year&nbsp;<br /><code>[duedate]</code>&nbsp;- the invoice due date&nbsp;<br /><code>[expirydate]</code>&nbsp;- the quote expiry date&nbsp;<br /><code>[number]</code>&nbsp;- the document number&nbsp;<br /><code>[total]</code>&nbsp;- the document total&nbsp;<br /><code>[jobaddress]</code>&nbsp;- the job address&nbsp;</div><div>&nbsp;</div><div>Computer Support for&nbsp;<code>[month]</code>&nbsp;<code>[year]</code>&nbsp;= Computer Support for September 2016&nbsp;<br />Quarterly Service&nbsp;<code>[month-2]</code>&nbsp;-&nbsp;<code>[month]</code>&nbsp;= Quarterly Service July - September&nbsp;<br />Invoice&nbsp;<code>[number]</code>&nbsp;due&nbsp;<code>[duedate]</code>&nbsp;= Invoice IV1144 due 20 October 2016</div><div>&nbsp;</div>`;
+
+            var toolbar = [ 'undo', 'bold', 'italic' ];
+
+
+            tinymce.init({
+                selector: '#mytextarea',
+                inline:false,
+                menubar:false,
+                elementpath:false,
+                statusbar: false,
+                toolbar:false,
+                mobile: {
+                    theme:'mobile',
+                    toolbar: toolbar
+                },
+                content_style: "li {list-style-position:inside;}",
+                forced_root_block: 'div',
+                forced_root_block_attrs:{
+                    'style':'font-size:11pt;font-name:Arial'
+                },
+                formats: {
+                    underline: { inline: 'u'}
+                },
+                init_instance_callback: function (editor) {
+                    editor.on('change', function (e) {
+                        textChanged();
+                    });
+                    editor.on('keyup', function (e) {
+                        textChanged();
+                    });
+                    editor.on('cut', function (e) {
+                        textChanged();
+                    });
+                    editor.on('paste', function (e) {
+                        textChanged();
+                    });
+                    editor.on('undo', function (e) {
+                        textChanged();
+                    });
+                    editor.on('nodeChange', function (e) {
+                        onToolbarStateChanged();
+                    });
+                    
+                }
+            }).then(function(selectors){
+                tinymce.activeEditor.fire('startEdition',null);
+                tinymce.activeEditor.on('backButtonTapped', function(e){
+                    console.log('going back event works!!');
+                });
+            });
+
+            function onToolbarStateChanged()
+            {
+                var commandsState = new Array();
+                toolbar.forEach(toolbarItem => {
+                    var result = isCommandOn(toolbarItem);
+                    if(result!==undefined)
+                    {
+                        commandsState.push({name:toolbarItem,state:result});
+                    }
+                });
+                console.log(commandsState);
+                return commandsState;
+            }
+
+            function textChanged()
+            {
+                console.log('yeah, text changed');
+                onToolbarStateChanged();
+            }
+
+            function undo()
+            {
+                fireCommand('undo');
+            }
+
+            function setBold()
+            {
+                fireCommand('bold');
+            }
+            function isBoldOn()
+            {
+                return isCommandOn('bold');
+            }
+
+            function setItalic()
+            {
+                fireCommand('italic');
+            }
+            function isItalicOn()
+            {
+                return isCommandOn('italic');
+            }
+
+            function fireCommand(commandName)
+            {
+                tinyMCE.activeEditor.execCommand(commandName);
+            }
+
+            function isCommandOn(commandName)
+            {
+                return tinyMCE.activeEditor.queryCommandState(commandName);
+            }
+
+            function serializeEditor()
+            {
+                alert(tinymce.activeEditor.getContent());
+            }
+            function onTestChanged(control)
+            {
+                var selectedTest = boldTextTest;
+                var selectedValue = control.options[control.selectedIndex].value;
+                if(selectedValue=='2')
+                    selectedTest = differentFontsTest;
+                else if(selectedValue=='3')
+                    selectedTest = italicTextTest;
+                else if(selectedValue=='4')
+                    selectedTest = underlineTextTest;
+                else if(selectedValue =='5')
+                    selectedTest = textColorsTest;
+                else if(selectedValue =='6')
+                    selectedTest = textAlignmentTest;
+                else if(selectedValue =='7')
+                    selectedTest = bulletListTest;
+                else if(selectedValue =='8')
+                    selectedTest = numberedListTest;
+                else if(selectedValue =='9')
+                    selectedTest = templatesVariablesTest;
+                tinymce.activeEditor.setContent(selectedTest);
+            }
+        </script>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'>
+       <style>
+           body
+           .tox
+           .tox-edit-area
+           {
+               border:0px;
+           }
+
+           body
+           .tox-tinymce
+           {
+               border:0px;
+           }
+       </style>
+    </head>
+    <body>
+            <select onchange="onTestChanged(this)">
+                    <option value="1" selected>Bold Text</option>
+                    <option value="2">Different Fonts</option>
+                    <option value="3">Italic Text</option>
+                    <option value="4">Underline Text</option>
+                    <option value="5">Text Colors</option>
+                    <option value="6">Text Alignment</option>
+                    <option value="7">Bullet Lists</option>
+                    <option value="8">Numbered Lists</option>
+                    <option value="9">Template Variables</option>
+                  </select>
+                  <div id="foo" onclick="serializeEditor();" style="width: 100px; height: 100px; background-color: brown"></div>
+        <button id="serialize" onclick="serializeEditor();">serialize</button>
+            <textarea id="mytextarea"></textarea>
+    </body>
+</html>
